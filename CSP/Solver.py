@@ -87,13 +87,13 @@ class Solver:
         return var.domain
 
     def mrv(self) -> Optional[Variable]:
-
-    # Write your code here
+        pass
+        # Write your code here
 
     def is_consistent(self, var: Variable):
-
-    # Write your code here
+        pass
+        # Write your code here
 
     def lcv(self, var: Variable):
-
-# Write your code here
+        pass
+        # Write your code here
