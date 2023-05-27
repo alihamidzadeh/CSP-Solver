@@ -36,10 +36,31 @@ class Solver:
         else:
             print(f'Failed to solve after {time_elapsed} ms')
 
-
     def backtracking(self):
         pass
-        # Write your code here
+        length_of_unassigned_variables = len(self.problem.get_unassigned_variables())
+        if (length_of_unassigned_variables == 0):
+            return True
+
+        domain_snapshots = self.create_domain_snapshot()
+
+        var = self.select_unassigned_variable()
+        self.problem.print_assignments(var)
+        for value in self.order_domain_values(var):
+            domain_snapshots = self.create_domain_snapshot()
+            var.value = value
+            self.problem.print_assignments(var)
+            if (self.is_consistent(var)):
+                if ((not self.use_forward_check )or (self.forward_check(var))):
+                    result = self.backtracking()
+                    if (result == True):
+                        return True
+
+            var.value = None
+
+        for v, domain_snapshot in domain_snapshots.items():
+            v.domain = domain_snapshot
+        return False
 
     def forward_check(self, var):
         pass
@@ -64,9 +85,6 @@ class Solver:
         pass
         # Write your code here
 
-
     def lcv(self, var: Variable):
         pass
         # Write your code here
-
-
