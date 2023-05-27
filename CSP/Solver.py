@@ -1,8 +1,4 @@
-import os
-import subprocess
 import time
-from collections import deque
-from copy import deepcopy
 from typing import Optional
 
 from CSP.Problem import Problem
