@@ -102,3 +102,24 @@ class Solver:
     def lcv(self, var: Variable):
         doamin_sorted = sorted(var.domain, key=lambda val: self.count_conflicts(var, val))
         return doamin_sorted
+
+    def count_conflicts(self, var, val):
+        conflicts = 0
+        var.value = val
+        for neighbor in var.neighbors:
+            if (not neighbor.has_value):
+                for other_var_candidate in neighbor.domain:
+                    neighbor.value = other_var_candidate
+                    if (not self.is_consistent(var)):
+                        conflicts += 1
+                    neighbor.value = None
+
+        var.value = None
+        return conflicts
+
+    def create_domain_snapshot(self):  # Creating a snapshot of domains before forward checking
+        domain_snapshots = {}
+        for variable in self.problem.variables:
+            if (not variable.has_value):
+                domain_snapshots[variable] = variable.domain[:]
+        return domain_snapshots
