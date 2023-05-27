@@ -94,9 +94,11 @@ class Solver:
         return minimum_var
 
     def is_consistent(self, var: Variable):
-        pass
-        # Write your code here
+        for constraint in self.problem.constraints:
+            if var in constraint.variables and not constraint.is_satisfied():
+                return False
+        return True
 
     def lcv(self, var: Variable):
-        pass
-        # Write your code here
+        doamin_sorted = sorted(var.domain, key=lambda val: self.count_conflicts(var, val))
+        return doamin_sorted
