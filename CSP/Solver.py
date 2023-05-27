@@ -37,7 +37,6 @@ class Solver:
             print(f'Failed to solve after {time_elapsed} ms')
 
     def backtracking(self):
-        pass
         length_of_unassigned_variables = len(self.problem.get_unassigned_variables())
         if (length_of_unassigned_variables == 0):
             return True
@@ -51,7 +50,7 @@ class Solver:
             var.value = value
             self.problem.print_assignments(var)
             if (self.is_consistent(var)):
-                if ((not self.use_forward_check )or (self.forward_check(var))):
+                if ((not self.use_forward_check) or (self.forward_check(var))):
                     result = self.backtracking()
                     if (result == True):
                         return True
@@ -63,8 +62,18 @@ class Solver:
         return False
 
     def forward_check(self, var):
-        pass
-        # Write your code here
+        nei = var.neighbors
+        for neighbor in nei:
+            if (not neighbor.has_value):
+                nei_domain = neighbor.domain
+                for other_var_candidate in nei_domain:
+                    neighbor.value = other_var_candidate
+                    if (not self.is_consistent(neighbor)):
+                        neighbor.domain.remove(other_var_candidate)
+                        if (len(neighbor.domain) == 0):
+                            return False
+                    neighbor.value = None
+        return True
 
     def select_unassigned_variable(self) -> Optional[Variable]:
         if self.use_mrv:
@@ -78,13 +87,13 @@ class Solver:
         return var.domain
 
     def mrv(self) -> Optional[Variable]:
-        pass
-        # Write your code here
+
+    # Write your code here
 
     def is_consistent(self, var: Variable):
-        pass
-        # Write your code here
+
+    # Write your code here
 
     def lcv(self, var: Variable):
-        pass
-        # Write your code here
+
+# Write your code here
