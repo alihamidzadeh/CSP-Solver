@@ -87,8 +87,11 @@ class Solver:
         return var.domain
 
     def mrv(self) -> Optional[Variable]:
-        pass
-        # Write your code here
+        unassigned_variables = self.problem.get_unassigned_variables()
+        if (not unassigned_variables):
+            return None
+        minimum_var = min(unassigned_variables, key=lambda var: len(var.domain))
+        return minimum_var
 
     def is_consistent(self, var: Variable):
         pass
